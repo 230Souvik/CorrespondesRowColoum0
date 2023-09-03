@@ -1,0 +1,67 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class ZeroMatrixWithArrayList {
+
+    public static ArrayList<ArrayList<Integer>> setZeroes(ArrayList<ArrayList<Integer>> matrix) {
+        int rows = matrix.size();
+        int cols = matrix.get(0).size();
+        List<Integer> zeroRows = new ArrayList<>();
+        List<Integer> zeroCols = new ArrayList<>();
+
+        // Step 1: Mark rows and columns containing zeros
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (matrix.get(i).get(j) == 0) {
+                    zeroRows.add(i);
+                    zeroCols.add(j);
+                }
+            }
+        }
+
+        // Step 2: Set elements to zero based on zeroRows and zeroCols
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (zeroRows.contains(i) || zeroCols.contains(j)) {
+                    matrix.get(i).set(j, 0);
+                }
+            }
+        }
+
+        return matrix;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Input the number of rows and columns
+        System.out.print("Enter the number of rows: ");
+        int rows = scanner.nextInt();
+        System.out.print("Enter the number of columns: ");
+        int cols = scanner.nextInt();
+
+        // Initialize the matrix
+        ArrayList<ArrayList<Integer>> matrix = new ArrayList<>();
+        for (int i = 0; i < rows; i++) {
+           ArrayList<Integer> row = new ArrayList<>();
+            System.out.printf("Enter values for row %d (separated by spaces): ", i + 1);
+            for (int j = 0; j < cols; j++) {
+                row.add(scanner.nextInt());
+            }
+             matrix.add(row);
+        }
+
+        // Call the setZeroes function to modify the matrix
+       ArrayList<ArrayList<Integer>>modifiedMatrix = setZeroes(matrix);
+
+        // Print the modified matrix
+        System.out.println("Modified Matrix:");
+        for (List<Integer> row : modifiedMatrix) {
+            for (int value : row) {
+                System.out.print(value + " ");
+            }
+            System.out.println();
+        }
+    }
+}
